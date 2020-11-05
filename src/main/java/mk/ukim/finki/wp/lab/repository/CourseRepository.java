@@ -1,27 +1,27 @@
 package mk.ukim.finki.wp.lab.repository;
 
+import mk.ukim.finki.wp.lab.bootstrap.CourseDataHolder;
+
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CourseRepository {
+
     List<Course> courseList;
 
     public CourseRepository() {
-        this.courseList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            this.courseList.add(new Course((long)i+12345, "Matematika " + i, "Super predmet so ke go prezapises " + i + " pati.", new StudentRepository().findAllStudents()));
-        }
+        this.courseList = CourseDataHolder.courses;
     }
 
-    List<Course> findAllCourses(){
+    public List<Course> findAllCourses(){
         return courseList;
     }
 
-    Course findById(Long courseId){
+    public Course findById(Long courseId){
         for (Course course: courseList) {
             if(course.getCourseId().equals(courseId)){
                 return course;
@@ -31,7 +31,7 @@ public class CourseRepository {
         return null;
     }
 
-    List<Student> findAllStudentsByCourse(Long courseId){
+    public List<Student> findAllStudentsByCourse(Long courseId){
         for (Course course: courseList) {
             if(course.getCourseId().equals(courseId)){
                 return course.getStudents();
@@ -41,8 +41,11 @@ public class CourseRepository {
         return null;
     }
 
-    Course addStudentToCourse(Student student, Course course){
+    public Course addStudentToCourse(Student student, Course course){
         course.getStudents().add(student);
+        course.getStudents().forEach(s ->{
+            System.out.println(s.getName());
+        });
         return course;
     }
 }
