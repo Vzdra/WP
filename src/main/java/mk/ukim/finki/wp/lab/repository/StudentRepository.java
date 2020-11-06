@@ -10,10 +10,11 @@ import java.util.List;
 @Repository
 public class StudentRepository {
 
-    List<Student> students;
+    List<Student> students = new ArrayList<>();
 
     public StudentRepository() {
-        this.students = StudentDataHolder.students;
+        //this.students = StudentDataHolder.students;
+        students.add(new Student("Zverot", "Pero", "Zoki", "Poki"));
     }
 
     public List<Student> findAllStudents(){

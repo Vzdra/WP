@@ -40,7 +40,7 @@ public class ListStudentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("size");
-        req.getSession().setAttribute("student", username);
+        System.out.println(username);
         courseService.addStudentInCourse(username, Long.parseLong(String.valueOf(req.getSession().getAttribute("course"))));
         resp.sendRedirect("/studentEnrollmentSummary");
     }

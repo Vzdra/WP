@@ -7,9 +7,7 @@ import mk.ukim.finki.wp.lab.repository.StudentRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -24,20 +22,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Student> listStudentsByCourse(Long CourseId) {
-        return studentRepository.findAllStudents();
+        return courseRepository.findAllStudentsByCourse(CourseId);
     }
 
     @Override
     public Course addStudentInCourse(String username, Long courseId) {
 
         for(Student std: listStudentsByCourse(courseId)){
-            if(this.studentRepository.findByUsername(username)==null){
+            Student student = studentRepository.findByUsername(username);
+            Course course = courseRepository.findById(courseId);
 
-                Student student = studentRepository.findByUsername(username);
-                Course course = courseRepository.findById(courseId);
-
-                return courseRepository.addStudentToCourse(student,course);
-            }
+            return courseRepository.addStudentToCourse(student,course);
         }
 
         return null;

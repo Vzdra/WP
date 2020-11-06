@@ -18,7 +18,7 @@ public class CourseRepository {
     }
 
     public List<Course> findAllCourses(){
-        return courseList;
+        return this.courseList;
     }
 
     public Course findById(Long courseId){
@@ -32,20 +32,11 @@ public class CourseRepository {
     }
 
     public List<Student> findAllStudentsByCourse(Long courseId){
-        for (Course course: courseList) {
-            if(course.getCourseId().equals(courseId)){
-                return course.getStudents();
-            }
-        }
-
-        return null;
+        return findById(courseId).getStudents();
     }
 
     public Course addStudentToCourse(Student student, Course course){
-        course.getStudents().add(student);
-        course.getStudents().forEach(s ->{
-            System.out.println(s.getName());
-        });
+        course.addStudent(student);
         return course;
     }
 }
