@@ -7,6 +7,7 @@ import mk.ukim.finki.wp.lab.repository.StudentRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,5 +47,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getById(Long courseId) {
         return courseRepository.findById(courseId);
+    }
+
+    @Override
+    public List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text) {
+        List<Student> filtered = new ArrayList<>();
+        courseRepository.findAllStudentsByCourse(courseId).forEach(s -> {
+            if (s.getName().contains(text) || s.getSurname().contains(text)) {
+                filtered.add(s);
+            }
+        });
+
+        return filtered;
     }
 }

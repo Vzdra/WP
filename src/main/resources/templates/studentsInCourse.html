@@ -9,6 +9,12 @@
 <header>
     <h1>Students in Course </h1>
 </header>
+
+<form th:method="POST" th:action="@{/studentEnrollmentSummary}">
+    <input type="text" name="filter">
+    <button type="submit"> Find </button>
+</form>
+
 <section>
     <div th:text="${course}"></div>
     <ul>

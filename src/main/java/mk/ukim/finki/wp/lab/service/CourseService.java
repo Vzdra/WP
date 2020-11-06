@@ -10,4 +10,5 @@ public interface CourseService {
     Course addStudentInCourse(String username, Long courseId);
     List<Course> listAll();
     Course getById(Long courseId);
+    List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text);
 }

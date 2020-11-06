@@ -22,9 +22,8 @@ public class CourseRepository {
     }
 
     public Course findById(Long courseId){
-        for (Course course: courseList) {
+        for (Course course: this.courseList) {
             if(course.getCourseId().equals(courseId)){
-                System.out.println(course.getCourseId());
                 return course;
             }
         }
