@@ -21,14 +21,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Student> listStudentsByCourse(Long CourseId) {
-        return courseRepository.findAllStudentsByCourse(CourseId);
+    public List<Student> listStudentsByCourse(Long courseId) {
+        return courseRepository.findAllStudentsByCourse(courseId);
     }
 
     @Override
     public Course addStudentInCourse(String username, Long courseId) {
 
-        for(Student std: listStudentsByCourse(courseId)){
+        if(!courseRepository.studentExists(courseId, username)){
             Student student = studentRepository.findByUsername(username);
             Course course = courseRepository.findById(courseId);
 
@@ -41,5 +41,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> listAll() {
         return courseRepository.findAllCourses();
+    }
+
+    @Override
+    public Course getById(Long courseId) {
+        return courseRepository.findById(courseId);
     }
 }

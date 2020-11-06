@@ -13,8 +13,8 @@ public class StudentDataHolder {
 
     @PostConstruct
     public void init(){
-        for(int i=0;i<5;i++){
-            students.add(new Student("Pero" + i,"Rero" + i, "Petar"+i, "Petreski"+i));
-        }
+//        for(int i=0;i<5;i++){
+//            students.add(new Student("Pero" + i,"Rero" + i, "Petar"+i, "Petreski"+i));
+//        }
     }
 }

@@ -10,11 +10,11 @@ import java.util.List;
 @Repository
 public class StudentRepository {
 
-    List<Student> students = new ArrayList<>();
+    List<Student> students; // = new ArrayList<>();
 
     public StudentRepository() {
-        //this.students = StudentDataHolder.students;
-        students.add(new Student("Zverot", "Pero", "Zoki", "Poki"));
+        this.students = StudentDataHolder.students;
+        //students.add(new Student("Zero", "Pero", "Zoki", "Poki"));
     }
 
     public List<Student> findAllStudents(){
@@ -36,6 +36,7 @@ public class StudentRepository {
     public Student findByUsername(String username){
         for (Student student: students) {
             if(student.getUsername().equals(username)){
+                System.out.println(student.getUsername());
                 return student;
             }
         }

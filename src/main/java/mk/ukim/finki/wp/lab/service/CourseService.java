@@ -9,4 +9,5 @@ public interface CourseService {
     List<Student> listStudentsByCourse(Long CourseId);
     Course addStudentInCourse(String username, Long courseId);
     List<Course> listAll();
+    Course getById(Long courseId);
 }

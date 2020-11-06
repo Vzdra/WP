@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.web;
+package mk.ukim.finki.wp.lab.web.servlet;
 
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.StudentService;
@@ -12,27 +12,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="course-list-servlet", urlPatterns = "/listCourses")
-public class CourseListServlet extends HttpServlet {
+@WebServlet(name="list-students-servlet", urlPatterns = "/addStudent")
+public class ListStudentServlet extends HttpServlet {
 
     SpringTemplateEngine springTemplateEngine;
+    StudentService studentService;
     CourseService courseService;
 
-    CourseListServlet(CourseService courseService, SpringTemplateEngine springTemplateEngine){
-        this.courseService = courseService;
+    ListStudentServlet(SpringTemplateEngine springTemplateEngine, StudentService studentService, CourseService courseService) {
+        this.studentService = studentService;
         this.springTemplateEngine = springTemplateEngine;
+        this.courseService = courseService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req,resp, getServletContext());
-        webContext.setVariable("courses", this.courseService.listAll());
-        this.springTemplateEngine.process("listCourses.html", webContext, resp.getWriter());
+        webContext.setVariable("students", this.studentService.listAll());
+        webContext.setVariable("courseid", req.getSession().getAttribute("course"));
+        this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("course", req.getParameter("courseId"));
-        resp.sendRedirect("/addStudent");
+        String username = req.getParameter("size");
+        courseService.addStudentInCourse(username, Long.parseLong(String.valueOf(req.getSession().getAttribute("course"))));
+        resp.sendRedirect("/studentEnrollmentSummary");
     }
 }

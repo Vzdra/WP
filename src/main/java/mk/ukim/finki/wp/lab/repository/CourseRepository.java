@@ -24,6 +24,7 @@ public class CourseRepository {
     public Course findById(Long courseId){
         for (Course course: courseList) {
             if(course.getCourseId().equals(courseId)){
+                System.out.println(course.getCourseId());
                 return course;
             }
         }
@@ -36,7 +37,19 @@ public class CourseRepository {
     }
 
     public Course addStudentToCourse(Student student, Course course){
-        course.addStudent(student);
+        //course.addStudent(student);
         return course;
+    }
+
+    public boolean studentExists(Long courseId, String username){
+        List<Student> students = findById(courseId).getStudents();
+
+        for(Student s: students){
+            if(s.getUsername().equals(username)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
