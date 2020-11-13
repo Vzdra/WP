@@ -36,7 +36,7 @@ public class CourseRepository {
     }
 
     public Course addStudentToCourse(Student student, Course course){
-        //course.addStudent(student);
+        course.addStudent(student);
         return course;
     }
 
