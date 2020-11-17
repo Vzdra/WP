@@ -1,6 +1,6 @@
 package mk.ukim.finki.wp.lab.repository;
 
-import mk.ukim.finki.wp.lab.bootstrap.CourseDataHolder;
+import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
@@ -14,7 +14,7 @@ public class CourseRepository {
     List<Course> courseList;
 
     public CourseRepository() {
-        this.courseList = CourseDataHolder.courses;
+        this.courseList = DataHolder.courses;
     }
 
     public List<Course> findAllCourses(){
@@ -50,5 +50,13 @@ public class CourseRepository {
         }
 
         return false;
+    }
+
+    public void save(Course c) {
+        courseList.add(c);
+    }
+
+    public void removeCourse(Long id) {
+        courseList.remove(findById(id));
     }
 }

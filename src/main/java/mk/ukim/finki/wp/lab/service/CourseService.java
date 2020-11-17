@@ -11,4 +11,6 @@ public interface CourseService {
     List<Course> listAll();
     Course getById(Long courseId);
     List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text);
+    boolean saveCourse(String name, String description, Long teacherId);
+    void removeCourse(Long id);
 }

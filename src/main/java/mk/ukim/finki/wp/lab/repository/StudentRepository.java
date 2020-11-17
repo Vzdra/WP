@@ -1,6 +1,6 @@
 package mk.ukim.finki.wp.lab.repository;
 
-import mk.ukim.finki.wp.lab.bootstrap.StudentDataHolder;
+import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Student;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ public class StudentRepository {
     List<Student> students;
 
     public StudentRepository() {
-        this.students = StudentDataHolder.students;
+        this.students = DataHolder.students;
     }
 
     public List<Student> findAllStudents(){
