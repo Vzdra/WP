@@ -21,7 +21,7 @@ public class DataHolder {
             teachers.add(new Teacher((long)i+11,"Vane" + i,"Panev" + i));
         }
         for (int i = 0; i < 5; i++) {
-            courses.add(new Course((long)i+12345, "Matematika " + i, "Super predmet so ke go prezapises " + i + " pati.", new ArrayList<Student>(), teachers.get((int)(Math.random()*5))));
+            courses.add(new Course((long)i+12345, "Matematika " + i, "Super predmet so ke go prezapises " + i + " pati.", new ArrayList<Student>(), teachers.get(i)));
         }
         for(int i=0;i<5;i++){
             students.add(new Student((long)i+1232, "Pero" + i,"Rero" + i, "Petar"+i, "Petreski"+i));

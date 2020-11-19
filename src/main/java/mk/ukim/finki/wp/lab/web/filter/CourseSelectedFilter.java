@@ -22,7 +22,7 @@ public class CourseSelectedFilter implements Filter {
         String courseid = (String)request.getSession().getAttribute("course");
         String path = request.getServletPath();
 
-        if(courseid==null && !path.equals("/courses")){
+        if(courseid==null && !path.startsWith("/courses")){
             response.sendRedirect("/courses");
         }else{
             filterChain.doFilter(servletRequest, servletResponse);

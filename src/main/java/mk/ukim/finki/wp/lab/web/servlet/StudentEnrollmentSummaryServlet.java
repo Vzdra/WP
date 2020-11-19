@@ -27,17 +27,16 @@ public class StudentEnrollmentSummaryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req,resp , getServletContext());
         Long courseId = Long.parseLong(String.valueOf(req.getSession().getAttribute("course")));
-        String filter = (String)req.getSession().getAttribute("filter");
-        System.out.println(filter);
 
         if(req.getSession().getAttribute("filtering")==null){
             webContext.setVariable("students", courseService.listStudentsByCourse(courseId));
         }else{
             webContext.setVariable("students", courseService.filterStudentsInCourseByNameOrSurname(courseId , (String)req.getSession().getAttribute("filter")));
+
         }
 
         webContext.setVariable("course", courseService.getById(Long.parseLong(String.valueOf(req.getSession().getAttribute("course")))).getName());
-
+        req.getSession().setAttribute("filter", "");
         this.springTemplateEngine.process("studentsInCourse.html", webContext, resp.getWriter());
     }
 

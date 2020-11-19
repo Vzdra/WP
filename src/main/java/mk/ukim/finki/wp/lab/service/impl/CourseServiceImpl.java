@@ -9,8 +9,8 @@ import mk.ukim.finki.wp.lab.repository.TeacherRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -67,15 +67,39 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean saveCourse(String name, String description, Long teacherId) {
+        if(courseRepository.containsWithName(name)){
+            return false;
+        }
         Teacher t = teacherRepository.findById(teacherId);
         List<Student> st = new ArrayList<>();
-        Course c = new Course((long)123, name, description, st, t);
+        Long id = (long)(Math.random()*12345);
+        Course c = new Course(id, name, description, st, t);
         courseRepository.save(c);
+        return true;
+    }
+
+    public boolean saveCourse(Long id, String name, String description, Long teacherId) {
+        if(courseRepository.containsWithName(name)){
+            return false;
+        }
+        Course toEdit = courseRepository.findById(id);
+        Teacher t = teacherRepository.findById(teacherId);
+        toEdit.setName(name);
+        toEdit.setDescription(description);
+        toEdit.setTeacher(t);
         return true;
     }
 
     @Override
     public void removeCourse(Long id) {
         courseRepository.removeCourse(id);
+    }
+
+    @Override
+    public List<Course> listSorted() {
+
+        List<Course> sorted = courseRepository.findAllCourses();
+        sorted.sort(Course.CourseNameComparator);
+        return sorted;
     }
 }

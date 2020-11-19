@@ -59,4 +59,13 @@ public class CourseRepository {
     public void removeCourse(Long id) {
         courseList.remove(findById(id));
     }
+
+    public boolean containsWithName(String name) {
+        for(Course course: courseList){
+            if(course.getName().toUpperCase().equals(name.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

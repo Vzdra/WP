@@ -21,11 +21,15 @@
         <label>
             <input type="radio" name="courseId" th:value="${course.getCourseId()}" th:text="${course.getName()}" checked>
         </label>
+        <a th:href="@{/courses/edit-form/{id}(id = ${course.getCourseId()})}">Edit</a>
+        <span> </span>
+        <a th:href="@{/courses/delete/{id}(id = ${course.getCourseId()})}">Delete</a>
         <br/>
     </div>
     <br/>
     <button type="submit">Submit</button>
     </form>
+    <a th:href="@{/courses/add}"><button>Add New</button></a>
 </main>
 </body>
 </html>
