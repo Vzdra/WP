@@ -78,8 +78,8 @@ public class CourseServiceImpl implements CourseService {
         return true;
     }
 
-    public boolean saveCourse(Long id, String name, String description, Long teacherId) {
-        if(courseRepository.containsWithName(name)){
+    public boolean editCourse(Long id, String name, String description, Long teacherId, String oldName) {
+        if(courseRepository.containsWithName(name) && !oldName.equals(name)){
             return false;
         }
         Course toEdit = courseRepository.findById(id);

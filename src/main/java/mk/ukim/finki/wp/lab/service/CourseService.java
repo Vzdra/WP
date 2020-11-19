@@ -12,7 +12,7 @@ public interface CourseService {
     Course getById(Long courseId);
     List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text);
     boolean saveCourse(String name, String description, Long teacherId);
-    boolean saveCourse(Long id, String name, String description, Long teacherId);
+    boolean editCourse(Long id, String name, String description, Long teacherId, String oldName);
     List<Course> listSorted();
     void removeCourse(Long id);
 }

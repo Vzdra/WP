@@ -42,10 +42,10 @@
         <label>Profesor:</label>
         <select name="tid" required>
             <div th:each="teacher:${teachers}">
-                <div th:if="teacher.id==crs.teacher.id">
+                <div th:if="${teacher.getId()==crs.getTeacher().getId()}">
                     <option th:value="${teacher.getId()}" th:text="${teacher.getName()}" selected></option>
                 </div>
-                <div th:unless="teacher.id==crs.teacher.id">
+                <div th:unless="${teacher.getId()==crs.getTeacher().getId()}">
                     <option th:value="${teacher.getId()}" th:text="${teacher.getName()}"></option>
                 </div>
             </div>

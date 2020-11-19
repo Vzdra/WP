@@ -67,6 +67,7 @@ public class CourseController {
         if(session.getAttribute("error")!="" && session.getAttribute("error")!=null){
             model.addAttribute("error",session.getAttribute("error"));
         }
+        session.setAttribute("oldCname", courseService.getById(id).getName());
         model.addAttribute("teachers", teacherService.findAll());
         model.addAttribute("courseid", id);
         model.addAttribute("crs", courseService.getById(id));
@@ -82,7 +83,7 @@ public class CourseController {
         if(id==null){
             return "redirect:/courses";
         }
-        if(!courseService.saveCourse(id, name, desc, tid)){
+        if(!courseService.editCourse(id, name, desc, tid, (String)session.getAttribute("oldCname"))){
             session.setAttribute("error", "Name already exists!");
             return "redirect:/courses/edit-form/" + id;
         }
