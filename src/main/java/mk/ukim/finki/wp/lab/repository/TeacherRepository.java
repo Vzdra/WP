@@ -12,7 +12,7 @@ public class TeacherRepository {
 
     List<Teacher> teachers;
 
-    public TeacherRepository(List<Teacher> teachers) {
+    public TeacherRepository() {
         this.teachers = DataHolder.teachers;
     }
 
