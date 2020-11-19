@@ -35,7 +35,6 @@ public class StudentRepository {
     public Student findByUsername(String username){
         for (Student student: students) {
             if(student.getUsername().equals(username)){
-                System.out.println(student.getUsername());
                 return student;
             }
         }
