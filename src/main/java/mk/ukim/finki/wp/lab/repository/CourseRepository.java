@@ -4,8 +4,10 @@ import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -67,5 +69,21 @@ public class CourseRepository {
             }
         }
         return false;
+    }
+
+    public List<Course> listByType(CourseType type, boolean hasFilter) {
+        if(!hasFilter){
+            return findAllCourses();
+        }
+
+        List<Course> filtered = new ArrayList<>();
+        if(type!=null && hasFilter){
+            for(Course course: courseList){
+                if(course.getType()==type){
+                    filtered.add(course);
+                }
+            }
+        }
+        return filtered;
     }
 }

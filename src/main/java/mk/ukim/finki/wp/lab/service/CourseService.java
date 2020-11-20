@@ -15,4 +15,5 @@ public interface CourseService {
     boolean editCourse(Long id, String name, String description, Long teacherId, String oldName);
     List<Course> listSorted();
     void removeCourse(Long id);
+    List<Course> listByType(String type);
 }

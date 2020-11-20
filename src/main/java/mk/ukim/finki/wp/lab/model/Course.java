@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
+import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 
 import javax.persistence.*;
 import java.util.Comparator;
@@ -16,6 +17,8 @@ public class Course {
     String name;
     String description;
 
+    CourseType type;
+
     @ManyToOne
     Teacher teacher;
 
@@ -28,6 +31,7 @@ public class Course {
         this.name = name;
         this.description = description;
         this.students = students;
+        this.type = CourseType.randomType();
     }
 
     public Course(Long courseId, String name, String description, List<Student> students, Teacher teacher) {
@@ -36,6 +40,7 @@ public class Course {
         this.description = description;
         this.students = students;
         this.teacher = teacher;
+        this.type = CourseType.randomType();
     }
 
     public Course(String name, String description, List<Student> students, Teacher teacher) {
@@ -43,6 +48,7 @@ public class Course {
         this.description = description;
         this.students = students;
         this.teacher = teacher;
+        this.type = CourseType.randomType();
     }
 
     public void addStudent(Student s){

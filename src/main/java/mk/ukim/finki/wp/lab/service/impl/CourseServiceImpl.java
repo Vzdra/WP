@@ -3,13 +3,13 @@ package mk.ukim.finki.wp.lab.service.impl;
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
+import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 import mk.ukim.finki.wp.lab.repository.CourseRepository;
 import mk.ukim.finki.wp.lab.repository.StudentRepository;
 import mk.ukim.finki.wp.lab.repository.TeacherRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Service
@@ -101,5 +101,25 @@ public class CourseServiceImpl implements CourseService {
         List<Course> sorted = courseRepository.findAllCourses();
         sorted.sort(Course.CourseNameComparator);
         return sorted;
+    }
+
+    @Override
+    public List<Course> listByType(String type) {
+        CourseType tt = null;
+        boolean ss = true;
+        switch (type){
+            case "MANDATORY":
+                tt = CourseType.MANDATORY;
+                break;
+            case "SUMMER":
+                tt = CourseType.SUMMER;
+                break;
+            case "WINTER":
+                tt = CourseType.WINTER;
+            case "NONE":
+                ss = false;
+        }
+
+        return courseRepository.listByType(tt,ss);
     }
 }

@@ -16,6 +16,17 @@
 </header>
 <main>
     <h2>Choose course:</h2>
+    <form th:method="POST" th:action="@{/courses/filtercourses}">
+        <select name="filter-item">
+            <div th:each="fil:${typefilter}">
+                <option th:text="${fil}" th:value="${fil}" selected></option>
+            </div>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+
     <form th:method="POST" th:action="@{/courses}">
     <div th:each="course:${courses}">
         <label>

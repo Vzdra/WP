@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/courses")
@@ -20,8 +22,28 @@ public class CourseController {
     }
 
     @GetMapping
-    public String getCoursesPage(Model model){
-        model.addAttribute("courses", courseService.listSorted());
+    public String getCoursesPage(HttpSession session, Model model){
+        List<String> types = new ArrayList<>();
+        types.add("WINTER");
+        types.add("SUMMER");
+        types.add("MANDATORY");
+        types.add("NONE");
+
+        String courseFilter = (String)session.getAttribute("course-filter");
+        System.out.println(courseFilter);
+
+        if(courseFilter!=null) {
+            if (!courseFilter.equals("NONE")) {
+                model.addAttribute("courses", courseService.listByType((String) session.getAttribute("course-filter")));
+            } else {
+                model.addAttribute("courses", courseService.listSorted());
+            }
+        }else{
+            model.addAttribute("courses", courseService.listSorted());
+        }
+
+        model.addAttribute("typefilter", types);
+
         return "listCourses";
     }
 
@@ -29,6 +51,12 @@ public class CourseController {
     public String postCourse(HttpSession session, @RequestParam(value = "courseId") String courseId){
         session.setAttribute("course", courseId);
         return "redirect:/addStudent";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/filtercourses")
+    public String filterCourses(@RequestParam(value = "filter-item") String type, HttpSession session){
+        session.setAttribute("course-filter", type);
+        return "redirect:/courses";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/add")
