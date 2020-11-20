@@ -54,11 +54,6 @@ public class CourseController {
         return "redirect:/courses";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/edit-form")
-    public String redirectCourses(){
-        return "redirect:/courses";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/edit-form/{id}")
     public String getEditCoursePage(HttpSession session, @PathVariable("id") Long id, Model model){
         if(id==null){

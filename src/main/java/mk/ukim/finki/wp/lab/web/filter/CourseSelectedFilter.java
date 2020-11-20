@@ -5,6 +5,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebFilter
 public class CourseSelectedFilter implements Filter {
@@ -21,8 +23,17 @@ public class CourseSelectedFilter implements Filter {
 
         String courseid = (String)request.getSession().getAttribute("course");
         String path = request.getServletPath();
+        List<String> reroutePaths = new ArrayList<>();
+        reroutePaths.add("/courses/");
+        reroutePaths.add("/courses/edit-form");
+        reroutePaths.add("/courses/edit-form/");
+        reroutePaths.add("/courses/delete");
+        reroutePaths.add("/courses/delete/");
+        reroutePaths.add("/");
 
-        if(courseid==null && !path.startsWith("/courses")){
+        if(courseid==null && !path.equals("/courses")){
+            response.sendRedirect("/courses");
+        }else if(reroutePaths.contains(path)){
             response.sendRedirect("/courses");
         }else{
             filterChain.doFilter(servletRequest, servletResponse);
