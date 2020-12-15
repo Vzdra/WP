@@ -5,7 +5,8 @@ import java.util.Random;
 public enum CourseType {
         WINTER,
         SUMMER,
-        MANDATORY;
+        MANDATORY,
+        ELECTIVE;
 
         public static CourseType randomType() {
             int pick = new Random().nextInt(CourseType.values().length);

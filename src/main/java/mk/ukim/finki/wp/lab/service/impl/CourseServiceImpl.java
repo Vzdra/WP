@@ -116,8 +116,13 @@ public class CourseServiceImpl implements CourseService {
                 break;
             case "WINTER":
                 tt = CourseType.WINTER;
+                break;
+            case "ELECTIVE":
+                tt = CourseType.ELECTIVE;
+                break;
             case "NONE":
                 ss = false;
+                break;
         }
 
         return courseRepository.listByType(tt,ss);

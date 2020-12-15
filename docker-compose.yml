@@ -1,0 +1,11 @@
+version: "3"
+services:
+  wp-db:
+    image: "postgres"
+    container_name: "wp2020_university"
+    environment:
+      - POSTGRES_USER=wp
+      - POSTGRES_PASSWORD=wp123
+      - POSTGRES_DB=university
+    ports:
+      - "5432:5432"

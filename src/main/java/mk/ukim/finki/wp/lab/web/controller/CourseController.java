@@ -27,10 +27,10 @@ public class CourseController {
         types.add("WINTER");
         types.add("SUMMER");
         types.add("MANDATORY");
+        types.add("ELECTIVE");
         types.add("NONE");
 
         String courseFilter = (String)session.getAttribute("course-filter");
-        System.out.println(courseFilter);
 
         if(courseFilter!=null) {
             if (!courseFilter.equals("NONE")) {
