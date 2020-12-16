@@ -7,6 +7,7 @@ import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 import mk.ukim.finki.wp.lab.repository.impl.CourseRepositoryImpl;
 import mk.ukim.finki.wp.lab.repository.impl.StudentRepositoryImpl;
 import mk.ukim.finki.wp.lab.repository.impl.TeacherRepositoryImpl;
+import mk.ukim.finki.wp.lab.repository.jpa.CourseRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
@@ -15,48 +16,50 @@ import java.util.*;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepositoryImpl courseRepositoryImpl;
+    private final CourseRepository courseRepository;
     private final StudentRepositoryImpl studentRepositoryImpl;
     private final TeacherRepositoryImpl teacherRepositoryImpl;
 
-    public CourseServiceImpl(CourseRepositoryImpl courseRepositoryImpl, StudentRepositoryImpl studentRepositoryImpl, TeacherRepositoryImpl teacherRepositoryImpl) {
-        this.courseRepositoryImpl = courseRepositoryImpl;
+    public CourseServiceImpl(CourseRepository courseRepository, StudentRepositoryImpl studentRepositoryImpl, TeacherRepositoryImpl teacherRepositoryImpl) {
+        this.courseRepository = courseRepository;
         this.studentRepositoryImpl = studentRepositoryImpl;
         this.teacherRepositoryImpl = teacherRepositoryImpl;
     }
 
     @Override
     public List<Student> listStudentsByCourse(Long courseId) {
-        return courseRepositoryImpl.findAllStudentsByCourse(courseId);
+        return courseRepository.findByCourseId(courseId).getStudents();
     }
 
     @Override
-    public Course addStudentInCourse(String username, Long courseId) {
+    public boolean addStudentInCourse(Long studentId, Long courseId) {
 
-        if(!courseRepositoryImpl.studentExists(courseId, username)){
-            Student student = studentRepositoryImpl.findByUsername(username);
-            Course course = courseRepositoryImpl.findById(courseId);
+        Course course = courseRepository.findByCourseId(courseId);
 
-            return courseRepositoryImpl.addStudentToCourse(student,course);
+        if(!studentExists(course.getStudents(), studentId)){
+            //Student student = studentRepositoryImpl.findByUsername(studentId);
+            //course.addStudent(student);
+            courseRepository.save(course);
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     @Override
     public List<Course> listAll() {
-        return courseRepositoryImpl.findAllCourses();
+        return courseRepository.findAll();
     }
 
     @Override
     public Course getById(Long courseId) {
-        return courseRepositoryImpl.findById(courseId);
+        return courseRepository.findByCourseId(courseId);
     }
 
     @Override
     public List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text) {
         List<Student> filtered = new ArrayList<>();
-        courseRepositoryImpl.findAllStudentsByCourse(courseId).forEach(s -> {
+        courseRepository.findByCourseId(courseId).getStudents().forEach(s -> {
             if (s.getName().contains(text) || s.getSurname().contains(text)) {
                 filtered.add(s);
             }
@@ -67,38 +70,37 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean saveCourse(String name, String description, Long teacherId) {
-        if(courseRepositoryImpl.containsWithName(name)){
-            return false;
-        }
         Teacher t = teacherRepositoryImpl.findById(teacherId);
+
         List<Student> st = new ArrayList<>();
-        Long id = (long)(Math.random()*12345);
-        Course c = new Course(id, name, description, st, t);
-        courseRepositoryImpl.save(c);
+
+        Course c = new Course(name, description, st, t);
+        courseRepository.save(c);
         return true;
     }
 
     public boolean editCourse(Long id, String name, String description, Long teacherId, String oldName) {
-        if(courseRepositoryImpl.containsWithName(name) && !oldName.equals(name)){
+        if(courseRepository.findByName(name)!=null && !oldName.equals(name)){
             return false;
         }
-        Course toEdit = courseRepositoryImpl.findById(id);
+        Course toEdit = courseRepository.findByCourseId(id);
         Teacher t = teacherRepositoryImpl.findById(teacherId);
         toEdit.setName(name);
         toEdit.setDescription(description);
         toEdit.setTeacher(t);
+
+        courseRepository.save(toEdit);
         return true;
     }
 
     @Override
     public void removeCourse(Long id) {
-        courseRepositoryImpl.removeCourse(id);
+        courseRepository.deleteById(id);
     }
 
     @Override
     public List<Course> listSorted() {
-
-        List<Course> sorted = courseRepositoryImpl.findAllCourses();
+        List<Course> sorted = courseRepository.findAll();
         sorted.sort(Course.CourseNameComparator);
         return sorted;
     }
@@ -125,6 +127,21 @@ public class CourseServiceImpl implements CourseService {
                 break;
         }
 
-        return courseRepositoryImpl.listByType(tt,ss);
+        if(ss==true){
+            return courseRepository.findByType(tt);
+        }
+
+        return courseRepository.findAll();
+    }
+
+    public boolean studentExists(List<Student> list, Long studentId){
+
+        for(Student s: list){
+            if(s.getId().equals(studentId)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseService {
     List<Student> listStudentsByCourse(Long CourseId);
-    Course addStudentInCourse(String username, Long courseId);
+    boolean addStudentInCourse(Long studentId, Long courseId);
     List<Course> listAll();
     Course getById(Long courseId);
     List<Student> filterStudentsInCourseByNameOrSurname(Long courseId, String text);

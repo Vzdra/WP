@@ -35,8 +35,8 @@ public class ListStudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("size");
-        courseService.addStudentInCourse(username, Long.parseLong(String.valueOf(req.getSession().getAttribute("course"))));
+        String userId = req.getParameter("size");
+        courseService.addStudentInCourse(Long.parseLong(userId), Long.parseLong(String.valueOf(req.getSession().getAttribute("course"))));
         resp.sendRedirect("/studentEnrollmentSummary");
     }
 }

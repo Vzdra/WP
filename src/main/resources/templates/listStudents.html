@@ -38,7 +38,7 @@
         <div th:if="${students.size()!=0}">
             <div th:each="student:${students}">
                 <label>
-                    <input type="radio" name="size" th:value="${student.getUsername()}" th:text="${student.getName()}" checked>
+                    <input type="radio" name="size" th:value="${student.getId()}" th:text="${student.getName()}" checked>
                 </label>
                 <br/>
             </div>
