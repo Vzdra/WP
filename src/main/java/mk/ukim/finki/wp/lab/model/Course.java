@@ -24,7 +24,7 @@ public class Course {
     @ManyToOne
     Teacher teacher;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Student> students;
 
     public Course(){}
