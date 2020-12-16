@@ -15,6 +15,7 @@ public class DataHolder {
     public static List<Student> students = new ArrayList<>();
     public static List<Teacher> teachers = new ArrayList<>();
 
+
     @PostConstruct
     public void init(){
         for(int i=0;i<5;i++){

@@ -1,6 +1,8 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
+import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import mk.ukim.finki.wp.lab.repository.jpa.GradeRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
 import mk.ukim.finki.wp.lab.service.StudentService;
 import org.springframework.stereotype.Service;
@@ -11,9 +13,11 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     StudentRepository studentRepository;
+    GradeRepository gradeRepository;
 
-    StudentServiceImpl(StudentRepository studentRepository){
+    StudentServiceImpl(StudentRepository studentRepository, GradeRepository gradeRepository){
         this.studentRepository = studentRepository;
+        this.gradeRepository = gradeRepository;
     }
 
     @Override
@@ -36,5 +40,9 @@ public class StudentServiceImpl implements StudentService {
         Student s = new Student(username, password, name, surname);
         studentRepository.save(s);
         return s;
+    }
+
+    public Character getGradeByStudentAndCourse(Long courseId, Long studentId){
+        return gradeRepository.getByCourse_CourseIdAndStudent_Id(courseId, studentId).getGrade();
     }
 }
