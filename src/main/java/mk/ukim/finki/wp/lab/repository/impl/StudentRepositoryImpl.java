@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Student;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class StudentRepository {
+public class StudentRepositoryImpl {
 
     List<Student> students;
 
-    public StudentRepository() {
+    public StudentRepositoryImpl() {
         this.students = DataHolder.students;
     }
 

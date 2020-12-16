@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Student;
-import mk.ukim.finki.wp.lab.repository.StudentRepository;
+import mk.ukim.finki.wp.lab.repository.impl.StudentRepositoryImpl;
 import mk.ukim.finki.wp.lab.service.StudentService;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +10,20 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    StudentRepository studentRepository;
+    StudentRepositoryImpl studentRepositoryImpl;
 
-    StudentServiceImpl(StudentRepository studentRepository){
-        this.studentRepository = studentRepository;
+    StudentServiceImpl(StudentRepositoryImpl studentRepositoryImpl){
+        this.studentRepositoryImpl = studentRepositoryImpl;
     }
 
     @Override
     public List<Student> listAll() {
-        return studentRepository.findAllStudents();
+        return studentRepositoryImpl.findAllStudents();
     }
 
     @Override
     public List<Student> searchByNameOrSurname(String text) {
-        return studentRepository.findAllByNameOrSurname(text);
+        return studentRepositoryImpl.findAllByNameOrSurname(text);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Student s = new Student(username, password, name, surname);
-        studentRepository.save(s);
+        studentRepositoryImpl.save(s);
         return s;
     }
 }

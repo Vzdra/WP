@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import lombok.Data;
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TeacherRepository {
+public class TeacherRepositoryImpl {
 
     List<Teacher> teachers;
 
-    public TeacherRepository() {
+    public TeacherRepositoryImpl() {
         this.teachers = DataHolder.teachers;
     }
 

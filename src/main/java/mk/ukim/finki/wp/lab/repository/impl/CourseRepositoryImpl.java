@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CourseRepository {
+public class CourseRepositoryImpl {
 
     List<Course> courseList;
 
-    public CourseRepository() {
+    public CourseRepositoryImpl() {
         this.courseList = DataHolder.courses;
     }
 
