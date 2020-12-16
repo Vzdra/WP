@@ -4,6 +4,7 @@ import lombok.Data;
 import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -36,11 +37,10 @@ public class Course {
         this.type = CourseType.randomType();
     }
 
-    public Course(Long courseId, String name, String description, List<Student> students, Teacher teacher) {
-        this.courseId = courseId;
+    public Course(String name, String description, Teacher teacher) {
         this.name = name;
         this.description = description;
-        this.students = students;
+        this.students = new ArrayList<>();
         this.teacher = teacher;
         this.type = CourseType.randomType();
     }

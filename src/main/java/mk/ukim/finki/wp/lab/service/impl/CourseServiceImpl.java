@@ -1,15 +1,18 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Course;
+import mk.ukim.finki.wp.lab.model.Grade;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
 import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
 import mk.ukim.finki.wp.lab.repository.jpa.CourseRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.GradeRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -18,11 +21,13 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
+    private final GradeRepository gradeRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, GradeRepository gradeRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.gradeRepository = gradeRepository;
     }
 
     @Override
@@ -33,12 +38,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean addStudentInCourse(Long studentId, Long courseId) {
 
+        Character[] chars = {'A', 'B', 'C', 'D', 'E', 'F'};
         Course course = courseRepository.findByCourseId(courseId);
 
         if(!studentExists(course.getStudents(), studentId)){
             Student student = studentRepository.getById(studentId);
             course.addStudent(student);
+            Grade g = new Grade(chars[new Random().nextInt(5)], student, course);
             courseRepository.save(course);
+            gradeRepository.save(g);
             return true;
         }
 
@@ -69,6 +77,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean saveCourse(String name, String description, Long teacherId) {
+        if(courseRepository.getByName(name)!=null){
+            return false;
+        }
+
         Teacher t = teacherRepository.getById(teacherId);
 
         List<Student> st = new ArrayList<>();
@@ -79,7 +91,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public boolean editCourse(Long id, String name, String description, Long teacherId, String oldName) {
-        if(courseRepository.findByName(name)!=null && !oldName.equals(name)){
+        if(courseRepository.getByName(name)!=null && !oldName.equals(name)){
             return false;
         }
         Course toEdit = courseRepository.findByCourseId(id);
@@ -93,7 +105,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public void removeCourse(Long id) {
+        gradeRepository.deleteAllByCourse_CourseId(id);
         courseRepository.deleteById(id);
     }
 
