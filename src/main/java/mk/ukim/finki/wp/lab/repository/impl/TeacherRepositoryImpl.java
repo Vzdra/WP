@@ -16,7 +16,7 @@ public class TeacherRepositoryImpl {
         this.teachers = DataHolder.teachers;
     }
 
-    public List<Teacher> findAll(){ return this.teachers; }
+    public List<Teacher> findAllTeachers(){ return this.teachers; }
 
     public Teacher findById(Long teacherId) {
         for(Teacher t : teachers){

@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Teacher;
-import mk.ukim.finki.wp.lab.repository.impl.TeacherRepositoryImpl;
+import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepository;
 import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-    TeacherRepositoryImpl teacherRepositoryImpl;
+    TeacherRepository teacherRepository;
 
-    public TeacherServiceImpl(TeacherRepositoryImpl teacherRepositoryImpl) {
-        this.teacherRepositoryImpl = teacherRepositoryImpl;
+    public TeacherServiceImpl(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
     public List<Teacher> findAll() {
-        return teacherRepositoryImpl.findAll();
+        return teacherRepository.findAll();
     }
 }

@@ -4,10 +4,9 @@ import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
 import mk.ukim.finki.wp.lab.model.enumerators.CourseType;
-import mk.ukim.finki.wp.lab.repository.impl.CourseRepositoryImpl;
-import mk.ukim.finki.wp.lab.repository.impl.StudentRepositoryImpl;
-import mk.ukim.finki.wp.lab.repository.impl.TeacherRepositoryImpl;
 import mk.ukim.finki.wp.lab.repository.jpa.CourseRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,13 @@ import java.util.*;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
-    private final StudentRepositoryImpl studentRepositoryImpl;
-    private final TeacherRepositoryImpl teacherRepositoryImpl;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentRepositoryImpl studentRepositoryImpl, TeacherRepositoryImpl teacherRepositoryImpl) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
         this.courseRepository = courseRepository;
-        this.studentRepositoryImpl = studentRepositoryImpl;
-        this.teacherRepositoryImpl = teacherRepositoryImpl;
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
@@ -37,8 +36,8 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findByCourseId(courseId);
 
         if(!studentExists(course.getStudents(), studentId)){
-            //Student student = studentRepositoryImpl.findByUsername(studentId);
-            //course.addStudent(student);
+            Student student = studentRepository.getById(studentId);
+            course.addStudent(student);
             courseRepository.save(course);
             return true;
         }
@@ -70,7 +69,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean saveCourse(String name, String description, Long teacherId) {
-        Teacher t = teacherRepositoryImpl.findById(teacherId);
+        Teacher t = teacherRepository.getById(teacherId);
 
         List<Student> st = new ArrayList<>();
 
@@ -84,7 +83,7 @@ public class CourseServiceImpl implements CourseService {
             return false;
         }
         Course toEdit = courseRepository.findByCourseId(id);
-        Teacher t = teacherRepositoryImpl.findById(teacherId);
+        Teacher t = teacherRepository.getById(teacherId);
         toEdit.setName(name);
         toEdit.setDescription(description);
         toEdit.setTeacher(t);
