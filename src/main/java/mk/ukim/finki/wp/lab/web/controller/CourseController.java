@@ -31,15 +31,29 @@ public class CourseController {
         types.add("NONE");
 
         String courseFilter = (String)session.getAttribute("course-filter");
+        String courseFilter2 = (String)session.getAttribute("course-filter2");
 
-        if(courseFilter!=null) {
-            if (!courseFilter.equals("NONE")) {
-                model.addAttribute("courses", courseService.listByType((String) session.getAttribute("course-filter")));
-            } else {
-                model.addAttribute("courses", courseService.listSorted());
+        if(courseFilter!=null || courseFilter2!=null) {
+
+            if(courseFilter!=null){
+                if (!courseFilter.equals("NONE")) {
+                    model.addAttribute("courses", courseService.listByType((String) session.getAttribute("course-filter")));
+                } else {
+                    model.addAttribute("courses", courseService.listSorted());
+                    session.setAttribute("course-filter", "NONE");
+                }
+            }
+
+            if(courseFilter2!=null){
+                if(courseFilter2.equals("")) model.addAttribute("courses", courseService.listSorted());
+                else {
+                    model.addAttribute("courses", courseService.findByFullText(courseFilter2));
+                }
+                session.setAttribute("course-filter2", null);
             }
         }else{
             model.addAttribute("courses", courseService.listSorted());
+            session.setAttribute("course-filter2", null);
         }
 
         model.addAttribute("typefilter", types);
@@ -56,6 +70,14 @@ public class CourseController {
     @RequestMapping(method = RequestMethod.POST, value = "/filtercourses")
     public String filterCourses(@RequestParam(value = "filter-item") String type, HttpSession session){
         session.setAttribute("course-filter", type);
+        return "redirect:/courses";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/filtercourses2")
+    public String filterCourses2(@RequestParam(value = "full-text") String text, HttpSession session){
+
+        System.out.println(text);
+        session.setAttribute("course-filter2", text);
         return "redirect:/courses";
     }
 

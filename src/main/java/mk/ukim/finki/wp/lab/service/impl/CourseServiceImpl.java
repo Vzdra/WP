@@ -157,4 +157,13 @@ public class CourseServiceImpl implements CourseService {
 
         return false;
     }
+
+    @Override
+    public List<Course> findByFullText(String text) {
+        if(text!=null && !text.equals("")){
+            return courseRepository.findByNameContainsOrDescriptionContains(text, text);
+        }
+
+        return courseRepository.findAll();
+    }
 }

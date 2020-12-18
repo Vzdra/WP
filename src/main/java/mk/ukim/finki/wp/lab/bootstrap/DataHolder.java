@@ -36,11 +36,11 @@ public class DataHolder {
     @PostConstruct
     public void init(){
         if(studentRepository.findAll().size()==0){
-            Student a = new Student("Pero", "Eden", "Pero", "Eden");
-            Student s = new Student("Slave","Dva", "Slave","Dva");
-            Student d = new Student("Stefi", "Tri", "Stefi", "Tri");
-            Student f = new Student("Anamarija", "Cetiri", "Anamarija", "Cetiri");
-            Student e = new Student("Elena", "Pet", "Elena", "Pet");
+            Student a = new Student("Pero", "Eden", "Pero", "Mero");
+            Student s = new Student("Slave","Dva", "Slave","Trave");
+            Student d = new Student("Stefi", "Tri", "Stefi", "Mefi");
+            Student f = new Student("Anamarija", "Cetiri", "Eva", "Leva");
+            Student e = new Student("Elena", "Pet", "Elena", "Melena");
 
             studentRepository.save(a);
             studentRepository.save(s);

@@ -16,4 +16,5 @@ public interface CourseService {
     List<Course> listSorted();
     void removeCourse(Long id);
     List<Course> listByType(String type);
+    List<Course> findByFullText(String text);
 }
