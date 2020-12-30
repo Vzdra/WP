@@ -21,7 +21,7 @@ public class Grade {
     @OneToOne
     Course course;
 
-    Grade(){}
+    public Grade(){}
 
     public Grade(Character grade,Student student, Course course){
         this.grade = grade;
