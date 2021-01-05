@@ -42,13 +42,11 @@
                 </label>
                 <br/>
             </div>
-
-            <br/>
             <br/>
             <button type="submit">Submit</button>
         </div>
     </form>
-    <div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
         <a href='/createStudent' type='button'>Create New Student</a> <br/> <br/>
     </div>
 

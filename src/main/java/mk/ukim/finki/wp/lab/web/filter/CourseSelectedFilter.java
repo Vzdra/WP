@@ -31,7 +31,7 @@ public class CourseSelectedFilter implements Filter {
         reroutePaths.add("/courses/delete/");
         reroutePaths.add("/");
 
-        if(courseid==null && !path.startsWith("/courses") && !path.contains("/h2")){
+        if(courseid==null && !path.startsWith("/courses") && !path.contains("/h2") && !path.contains("/login") && !path.contains("/logout")){
             response.sendRedirect("/courses");
         }else if(reroutePaths.contains(path)){
             response.sendRedirect("/courses");

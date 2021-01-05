@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/courses")
+@RequestMapping( "/courses")
 public class CourseController {
 
     CourseService courseService;
@@ -20,6 +20,7 @@ public class CourseController {
         this.courseService = courseService;
         this.teacherService = teacherService;
     }
+
 
     @GetMapping
     public String getCoursesPage(HttpSession session, Model model){

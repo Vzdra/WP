@@ -35,18 +35,25 @@
 
     <form th:method="POST" th:action="@{/courses}">
     <div th:each="course:${courses}">
-        <label>
-            <input type="radio" name="courseId" th:value="${course.getCourseId()}" th:text="${course.getName()}" checked>
-        </label>
-        <a th:href="@{/courses/edit-form/{id}(id = ${course.getCourseId()})}">Edit</a>
-        <span> </span>
-        <a th:href="@{/courses/delete/{id}(id = ${course.getCourseId()})}">Delete</a>
-        <br/>
+        <div>
+            <label>
+                <input type="radio" name="courseId" th:value="${course.getCourseId()}" th:text="${course.getName()}" checked>
+            </label>
+            <div style="display: inline-block" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/courses/edit-form/{id}(id = ${course.getCourseId()})}">Edit</a>
+                <span> </span>
+                <a th:href="@{/courses/delete/{id}(id = ${course.getCourseId()})}">Delete</a>
+            </div>
+            <br/>
+        </div>
+
     </div>
     <br/>
     <button type="submit">Submit</button>
     </form>
-    <a th:href="@{/courses/add}"><button>Add New</button></a>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/courses/add}"><button>Add New</button></a>
+    </div>
 </main>
 </body>
 </html>
