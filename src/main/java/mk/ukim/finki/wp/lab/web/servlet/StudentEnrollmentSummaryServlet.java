@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name="student-enrollment-summary-servlet", urlPatterns = "/studentEnrollmentSummary")
+@WebServlet(name="student-enrollment-summary-servlet", urlPatterns = "/servlet/studentEnrollmentSummary")
 public class StudentEnrollmentSummaryServlet extends HttpServlet {
 
     SpringTemplateEngine springTemplateEngine;
