@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name="student-enrollment-summary-servlet", urlPatterns = "/servlet/studentEnrollmentSummary")
+@WebServlet(name="student-enrollment-summary-servlet", urlPatterns = "/studentEnrollmentSummary")
 public class StudentEnrollmentSummaryServlet extends HttpServlet {
 
     SpringTemplateEngine springTemplateEngine;
@@ -52,6 +52,7 @@ public class StudentEnrollmentSummaryServlet extends HttpServlet {
         webContext.setVariable("gradeMap", studentMap);
         webContext.setVariable("course", courseService.getById(Long.parseLong(String.valueOf(req.getSession().getAttribute("course")))));
         req.getSession().setAttribute("filter", "");
+        resp.setContentType("text/html");
         this.springTemplateEngine.process("studentsInCourse.html", webContext, resp.getWriter());
     }
 

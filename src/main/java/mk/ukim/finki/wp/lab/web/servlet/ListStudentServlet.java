@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="list-students-servlet", urlPatterns = "/servlet/addStudent")
+@WebServlet(name="list-students-servlet", urlPatterns = "/addStudent")
 public class ListStudentServlet extends HttpServlet {
 
     SpringTemplateEngine springTemplateEngine;
@@ -30,6 +30,7 @@ public class ListStudentServlet extends HttpServlet {
         WebContext webContext = new WebContext(req,resp, getServletContext());
         webContext.setVariable("students", this.studentService.listAll());
         webContext.setVariable("courseid", req.getSession().getAttribute("course"));
+        resp.setContentType("text/html");
         this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
     }
 

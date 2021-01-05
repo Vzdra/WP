@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "create-student-servlet", urlPatterns = "/servlet/createStudent")
+@WebServlet(name = "create-student-servlet", urlPatterns = "/createStudent")
 public class CreateStudentServlet extends HttpServlet {
 
     SpringTemplateEngine springTemplateEngine;
@@ -25,6 +25,7 @@ public class CreateStudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req, resp, getServletContext());
+        resp.setContentType("text/html");
         this.springTemplateEngine.process("createStudent.html", webContext, resp.getWriter());
     }
 
