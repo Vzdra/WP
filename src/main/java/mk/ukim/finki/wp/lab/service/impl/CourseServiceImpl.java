@@ -140,7 +140,7 @@ public class CourseServiceImpl implements CourseService {
                 break;
         }
 
-        if(ss==true){
+        if(ss){
             return courseRepository.findByType(tt);
         }
 
