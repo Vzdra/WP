@@ -39,7 +39,7 @@
             <label>
                 <input type="radio" name="courseId" th:value="${course.getCourseId()}" th:text="${course.getName()}" checked>
             </label>
-            <div style="display: inline-block" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div style="display: inline-block" sec:authorize="hasRole('ROLE_ADMIN')" class="editdelete">
                 <a th:href="@{/courses/edit-form/{id}(id = ${course.getCourseId()})}">Edit</a>
                 <span> </span>
                 <a th:href="@{/courses/delete/{id}(id = ${course.getCourseId()})}">Delete</a>
@@ -51,7 +51,7 @@
     <br/>
     <button type="submit">Submit</button>
     </form>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="addcourse">
         <a th:href="@{/courses/add}"><button>Add New</button></a>
     </div>
 </main>
