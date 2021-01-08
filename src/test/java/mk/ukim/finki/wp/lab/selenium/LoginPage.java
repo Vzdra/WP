@@ -19,7 +19,7 @@ public class LoginPage extends AbstractPage{
     }
 
     public static CoursePage login(WebDriver driver, String username, String password){
-        get(driver, "/login");
+        get(driver, "/login?logout");
         System.out.println(driver.getCurrentUrl());
         LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.username.sendKeys(username);

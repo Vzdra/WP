@@ -21,9 +21,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/courses", "/addStudent", "/studentEnrollmentSummary", "/assets/**")
+                .antMatchers( "/assets/**")
                 .permitAll()
-                .antMatchers("/createStudent", "/courses/edit-form/**", "/courses/delete/**", "/courses/add")
+                .antMatchers(  "/","/courses", "/addStudent", "/studentEnrollmentSummary")
+                .authenticated()
+                .antMatchers( "/createStudent", "/courses/edit-form/**", "/courses/delete/**", "/courses/add")
                 .hasRole("ADMIN")
                 .and()
                 .formLogin()
@@ -36,6 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder.encode("admin"))
-                .authorities("ROLE_ADMIN");
+                .authorities("ROLE_ADMIN")
+                .and()
+                .withUser("user")
+                .password(passwordEncoder.encode("user"))
+                .authorities("ROLE_USER");
     }
 }
